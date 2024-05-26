@@ -5,7 +5,7 @@
   <artifactId>alkewallet</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>alkewallet_5 Maven Webapp</name>
+  <name>alkewallet5 Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <dependencies>
@@ -26,7 +26,7 @@
   </dependencies>
 
   <build>
-    <finalName>alkewallet_5</finalName>
+    <finalName>alkewallet5</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
