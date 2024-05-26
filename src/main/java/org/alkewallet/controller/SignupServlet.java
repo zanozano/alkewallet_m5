@@ -1,4 +1,4 @@
-package org.alkewallet;
+package org.alkewallet.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

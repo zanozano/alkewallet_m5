@@ -1,24 +1,24 @@
 <div id="signup" class="row">
     <div class="col-md-6 offset-md-3">
-        <div class="card mt-5">
-            <div class="card-header">
-                <h4>Sign up</h4>
-            </div>
-            <div class="card-body">
-                <form action="login" method="post">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary">Ingresar</button>
-                    </div>
-                </form>
-            </div>
+        <div class="card-custom mt-5 p-5">
+            <h4 class="text-center mb-4">Sign Up</h4>
+            <form action="signup" method="post">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="email"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email" name="email" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="password"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password" name="password" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="confirmpassword"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" placeholder="Confirm Password" aria-label="ConfirmPassword" aria-describedby="confirmpassword" name="confirmpassword" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

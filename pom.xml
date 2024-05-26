@@ -8,7 +8,20 @@
   <name>alkewallet5 Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <maven.compiler.source>22</maven.compiler.source>
+    <maven.compiler.target>22</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencies>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.7.2</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -23,9 +36,18 @@
       <scope>provided</scope>
     </dependency>
 
+
+
+
+
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
     <finalName>alkewallet5</finalName>
     <plugins>
       <plugin>
