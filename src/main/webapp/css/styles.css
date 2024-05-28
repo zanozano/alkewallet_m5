@@ -6,6 +6,10 @@
     --shaded-color: rgba(var(--bd-violet-rgb), 0.9);
 }
 
+body {
+    background-color: #ECECEC;
+}
+
 .btn-primary {
     --bs-btn-font-weight: 600;
     --bs-btn-color: var(--bs-white);
@@ -20,30 +24,22 @@
     --bs-btn-active-border-color: rgba(var(--bd-violet-rgb), 0.8);
 }
 
-
 /* Scroll Modification */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     background-color: #f0f0f0;
 }
 
-/* Handler */
 ::-webkit-scrollbar-thumb {
     background-color: #b0b0b0;
     border-radius: 24px;
 }
 
-/* Handler onHover */
 ::-webkit-scrollbar-thumb:hover {
     background-color: #969696;
-}
-
-body {
-    background-color: #ECECEC;
 }
 
 .bg-color {
@@ -53,10 +49,16 @@ body {
 .card-custom {
     border-radius: 10px;
     background: #ffffff;
-    box-shadow:  20px 20px 60px #d9d9d9,-20px -20px 60px #ffffff;
+    box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+}
+
+.main-section {
+    display: flex;
+    align-items: center;
+    height: 60vh;
 }
 
 .custom-heading {
-    font-size: 5rem;
-    line-height: 4.4rem
+    font-size: 4.4rem;
+    line-height: 4.4rem;
 }

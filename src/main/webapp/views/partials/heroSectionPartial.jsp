@@ -6,7 +6,7 @@
     String buttonText = (user != null) ? "Access My Account" : "Get Started";
 %>
 
-<section class="hero-section overflow-hidden">
+<section class="main-section overflow-hidden">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">

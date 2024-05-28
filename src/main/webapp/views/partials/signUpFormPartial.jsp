@@ -1,4 +1,4 @@
-<div id="signup" class="row">
+<div id="signup" class="main-section row">
     <div class="col-md-6 offset-md-3">
         <div class="card-custom mt-5 p-5">
             <h4 class="text-center mb-4">Sign Up</h4>
