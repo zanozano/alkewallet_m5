@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.alkewallet.dao.UserDAO;
+
 import org.alkewallet.model.Account;
+import org.alkewallet.model.Transaction;
 import org.alkewallet.model.User;
 
 import java.io.IOException;
@@ -32,6 +34,10 @@ public class AccountServlet extends HttpServlet {
             try {
                 List<Account> accounts = userDAO.getUserAccounts(user.getEmail());
                 request.setAttribute("accounts", accounts);
+
+                List<Transaction> transactions = userDAO.getUserTransactions(user.getId());
+                request.setAttribute("transactions", transactions);
+
                 request.getRequestDispatcher("/views/accountView.jsp").forward(request, response);
             } catch (SQLException e) {
                 throw new ServletException("Error retrieving user accounts", e);
@@ -41,4 +47,3 @@ public class AccountServlet extends HttpServlet {
         }
     }
 }
-

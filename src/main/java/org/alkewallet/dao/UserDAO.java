@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.alkewallet.model.Transaction;
 import org.alkewallet.model.Account;
 import org.alkewallet.model.User;
 import org.alkewallet.util.DatabaseConnection;
@@ -27,6 +28,7 @@ public class UserDAO {
 
             if (resultSet.next()) {
                 user = new User();
+                user.setId(resultSet.getString("id"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
             }
@@ -55,12 +57,12 @@ public class UserDAO {
     public List<Account> getUserAccounts(String email) throws SQLException {
         List<Account> accounts = new ArrayList<>();
         String query = "SELECT a.id as account_id, c.currency_code, b.amount " +
-                "FROM users u " +
-                "JOIN accounts a ON u.id = a.user_id " +
-                "JOIN balances b ON a.id = b.account_id " +
-                "JOIN currencies c ON b.currency_code = c.currency_code " +
-                "WHERE u.email = ? " +
-                "ORDER BY CASE WHEN c.currency_code = 'CLP' THEN 0 ELSE 1 END";
+                       "FROM users u " +
+                       "JOIN accounts a ON u.id = a.user_id " +
+                       "JOIN balances b ON a.id = b.account_id " +
+                       "JOIN currencies c ON b.currency_code = c.currency_code " +
+                       "WHERE u.email = ? " +
+                       "ORDER BY CASE WHEN c.currency_code = 'CLP' THEN 0 ELSE 1 END";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -77,6 +79,35 @@ public class UserDAO {
             }
         }
         return accounts;
+    }
+
+    public List<Transaction> getUserTransactions(String userId) throws SQLException {
+        List<Transaction> transactions = new ArrayList<>();
+        String query = "SELECT amount, transaction_date, sender_id, receiver_id, currency_code, type " +
+                "FROM transactions " +
+                "WHERE sender_id = ? OR receiver_id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            UUID userUUID = UUID.fromString(userId);
+
+            statement.setObject(1, userUUID);
+            statement.setObject(2, userUUID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setAmount(resultSet.getDouble("amount"));
+                transaction.setTransactionDate(resultSet.getDate("transaction_date"));
+                transaction.setSenderId(resultSet.getString("sender_id"));
+                transaction.setReceiverId(resultSet.getString("receiver_id"));
+                transaction.setCurrencyCode(resultSet.getString("currency_code"));
+                transaction.setType(resultSet.getString("type"));
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
     }
 
 }
