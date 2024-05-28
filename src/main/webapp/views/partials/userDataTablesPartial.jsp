@@ -2,13 +2,14 @@
 <%@ page import="org.alkewallet.model.Transaction" %>
 <%@ page import="java.util.List" %>
 
-<h3 class="mt-5">User Account</h3>
+<h3 class="mt-5">User Accounts</h3>
 <table class="table table-striped mt-2">
     <thead>
         <tr>
             <th>ID</th>
             <th>Code</th>
             <th>Balance</th>
+            <th>Type</th>
         </tr>
     </thead>
     <tbody>
@@ -16,11 +17,12 @@
         int iAccount = 1;
         for (Account account : (List<Account>) request.getAttribute("accounts")) {
         %>
-            <tr>
-                <td><%= iAccount++ %></td>
-                <td><%= account.getCurrencyCode() %></td>
-                <td><%= account.getAmount() %></td>
-            </tr>
+        <tr>
+            <td><%= iAccount++ %></td>
+            <td><%= account.getCurrencyCode() %></td>
+            <td><%= account.getAmount() %></td>
+            <td><%= account.getCurrencyCode().equals("CLP") ? "Main" : "Secondary" %></td>
+        </tr>
         <% } %>
     </tbody>
 </table>
@@ -43,15 +45,15 @@
         int iTransaction = 1;
         for (Transaction transaction : (List<Transaction>) request.getAttribute("transactions")) {
         %>
-            <tr>
-                <td><%= iTransaction++ %></td>
-                <td><%= transaction.getCurrencyCode() %></td>
-                <td><%= transaction.getAmount() %></td>
-                <td><%= transaction.getType() %></td>
-                <td><%= transaction.getTransactionDate() %></td>
-                <td><%= transaction.getSenderId() %></td>
-                <td><%= transaction.getReceiverId() %></td>
-            </tr>
+        <tr>
+            <td><%= iTransaction++ %></td>
+            <td><%= transaction.getCurrencyCode() %></td>
+            <td><%= transaction.getAmount() %></td>
+            <td><%= transaction.getType() %></td>
+            <td><%= transaction.getTransactionDate() %></td>
+            <td><%= transaction.getSenderId() %></td>
+            <td><%= transaction.getReceiverId() %></td>
+        </tr>
         <% } %>
     </tbody>
 </table>
