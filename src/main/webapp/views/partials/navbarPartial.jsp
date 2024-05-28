@@ -3,7 +3,7 @@
 
 <% User user = (User) session.getAttribute("user"); %>
 
-<nav class="navbar navbar-expand-lg bg-color" data-bs-theme="dark">
+<nav class="navbar navbar-dark navbar-expand-lg bg-color">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">AlkeWallet</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
