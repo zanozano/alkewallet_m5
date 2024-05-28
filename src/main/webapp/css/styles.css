@@ -24,6 +24,15 @@ body {
     --bs-btn-active-border-color: rgba(var(--bd-violet-rgb), 0.8);
 }
 
+.text-bg-primary {
+    background-color: #6f42c1 !important;
+}
+
+.badge {
+    padding: 0.8rem 1.4rem;
+    background-color: #6f42c1;
+}
+
 /* Scroll Modification */
 ::-webkit-scrollbar {
     width: 8px;

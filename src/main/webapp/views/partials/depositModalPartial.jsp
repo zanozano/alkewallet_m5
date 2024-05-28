@@ -1,8 +1,8 @@
-<div class="modal" tabindex="-1" id="modalWithdraw">
+<div class="modal" tabindex="-1" id="modalDeposit">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Withdraw</h3>
+        <h3 class="modal-title">Deposit</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -13,7 +13,7 @@
         <div class="input-group mb-3">
           <span class="input-group-text" id="currency"><i class="fas fa-arrow-right-arrow-left"></i></span>
           <select class="form-control" aria-label="Currency" aria-describedby="currency" name="currency">
-            <option selected>Select currency</option>
+            <option selected>Select account</option>
             <option value="USD">USD</option>
             <option value="CNY">CNY</option>
             <option value="EUR">EUR</option>

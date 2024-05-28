@@ -31,10 +31,10 @@
                     <%
                 }
 
-                String transferModal = request.getParameter("transferModal");
-                if (transferModal != null) {
+                String depositModal = request.getParameter("depositModal");
+                if (depositModal != null) {
                     %>
-                    <jsp:include page="<%= transferModal %>" />
+                    <jsp:include page="<%= depositModal %>" />
                     <%
                 }
 
