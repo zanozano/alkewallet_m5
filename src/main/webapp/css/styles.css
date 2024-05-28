@@ -2,6 +2,8 @@
     --bd-violet: #6f42c1;
     --bd-violet-bg: #6f42c1;
     --bd-violet-rgb: 111, 66, 193;
+    --shade-percent: 10%;
+    --shaded-color: rgba(var(--bd-violet-rgb), 0.9);
 }
 
 .btn-primary {
