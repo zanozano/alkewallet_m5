@@ -12,13 +12,14 @@
     --bs-btn-bg: var(--bd-violet-bg);
     --bs-btn-border-color: var(--bd-violet-bg);
     --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
-    --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+    --bs-btn-hover-bg: var(--shaded-color);
+    --bs-btn-hover-border-color: var(--shaded-color);
     --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
     --bs-btn-active-color: var(--bs-btn-hover-color);
-    --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
-    --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+    --bs-btn-active-bg: rgba(var(--bd-violet-rgb), 0.8);
+    --bs-btn-active-border-color: rgba(var(--bd-violet-rgb), 0.8);
 }
+
 
 /* Scroll Modification */
 ::-webkit-scrollbar {
@@ -53,4 +54,9 @@ body {
     border-radius: 10px;
     background: #ffffff;
     box-shadow:  20px 20px 60px #d9d9d9,-20px -20px 60px #ffffff;
+}
+
+.custom-heading {
+    font-size: 5rem;
+    line-height: 4.4rem
 }
