@@ -15,7 +15,7 @@ public class SignupServlet extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         userDAO = new UserDAO();
     }
 

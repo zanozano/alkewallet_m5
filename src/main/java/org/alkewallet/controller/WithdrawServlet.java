@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/deposit")
-public class UpdateBalanceServlet extends HttpServlet {
+@WebServlet("/withdraw")
+public class WithdrawServlet extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         userDAO = new UserDAO();
     }
 
@@ -30,7 +30,7 @@ public class UpdateBalanceServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("/login");
             return;
         }
 
@@ -44,9 +44,9 @@ public class UpdateBalanceServlet extends HttpServlet {
 
         String currency = request.getParameter("currency");
 
-        boolean success = false;
+        boolean success;
         try {
-            success = userDAO.deposit(email, amount, currency);
+            success = userDAO.withdraw(email, amount, currency);
         } catch (SQLException e) {
             throw new ServletException("Error updating balance", e);
         }
@@ -61,9 +61,9 @@ public class UpdateBalanceServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new ServletException("Error updating balance", e);
             }
-            response.setStatus(HttpServletResponse.SC_OK);
+            response.sendRedirect("/account");
         }  else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.sendRedirect("/account");
         }
     }
 }

@@ -10,8 +10,7 @@
           <img src="img/deposit-withdraw.png" alt="Coin Image" class="img-fluid" width="200px" height="200px">
           <p class="text-center">Please complete the information below to proceed with the action.</p>
         </div>
-        <form id="depositForm" action="" method="post">
-          <input id="operation" type="hidden" name="operation" value="+">
+        <form id="depositForm" action="/deposit" method="post">
           <div class="input-group mb-3">
             <span class="input-group-text"><i class="fas fa-arrow-right-arrow-left"></i></span>
             <select id="currency" class="form-control" aria-label="Currency" aria-describedby="currency" name="currency">
@@ -35,48 +34,3 @@
     </div>
   </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('#depositForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            let currency = document.getElementById('currency').value;
-            let amount = document.getElementById('amount').value;
-
-            fetch('deposit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `currency=${currency}&amount=${amount}`
-            }).then(response => {
-                if (response.ok) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Balance updated successfully.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        $('#modalDeposit').modal('hide');
-                    });
-                } else {
-                    return response.json().then(error => {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Error updating the balance',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    });
-                }
-            }).catch(error => {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An unexpected error occurred.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            });
-        });
-    });
-</script>

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.alkewallet.dao.UserDAO;
-
 import org.alkewallet.model.Account;
 import org.alkewallet.model.Transaction;
 import org.alkewallet.model.User;
@@ -16,8 +15,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/account")
-public class AccountServlet extends HttpServlet {
+@WebServlet("/deposit")
+public class DepositServlet extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
@@ -26,11 +25,33 @@ public class AccountServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user != null) {
+        if (user == null) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        String email = user.getEmail();
+        double amount;
+        try {
+            amount = Double.parseDouble(request.getParameter("amount"));
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid amount format", e);
+        }
+
+        String currency = request.getParameter("currency");
+
+        boolean success;
+        try {
+            success = userDAO.deposit(email, amount, currency);
+        } catch (SQLException e) {
+            throw new ServletException("Error updating balance", e);
+        }
+
+        if (success) {
             try {
                 List<Account> accounts = userDAO.getUserAccounts(user.getEmail());
                 request.setAttribute("accounts", accounts);
@@ -38,12 +59,12 @@ public class AccountServlet extends HttpServlet {
                 List<Transaction> transactions = userDAO.getUserTransactions(user.getId());
                 request.setAttribute("transactions", transactions);
 
-                request.getRequestDispatcher("/views/accountView.jsp").forward(request, response);
             } catch (SQLException e) {
-                throw new ServletException("Error retrieving user accounts", e);
+                throw new ServletException("Error updating balance", e);
             }
-        } else {
-            response.sendRedirect("login");
+            response.sendRedirect("/account");
+        }  else {
+            response.sendRedirect("/account");
         }
     }
 }

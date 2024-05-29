@@ -9,8 +9,12 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().removeAttribute("user");
-        response.sendRedirect("/");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        try {
+            request.getSession().removeAttribute("user");
+            response.sendRedirect("/");
+        } catch (IOException e) {
+            throw new ServletException("Error during logout", e);
+        }
     }
 }
