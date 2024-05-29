@@ -1,9 +1,6 @@
 package org.alkewallet.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +16,8 @@ public class UserDAO {
 
     public static final String CREATE_USER = "INSERT INTO users (id, email, password) VALUES (?, ?, ?)";
 
+    public static final String GET_USER_ID = "SELECT id FROM users WHERE email = ?";
+
     public static final String GET_ACCOUNTS = "SELECT a.id as account_id, c.currency_code, b.amount " +
             "FROM users u " +
             "JOIN accounts a ON u.id = a.user_id " +
@@ -30,6 +29,9 @@ public class UserDAO {
     public static final String GET_TRANSACTIONS = "SELECT amount, transaction_date, sender_id, receiver_id, currency_code, type " +
             "FROM transactions " +
             "WHERE sender_id = ? OR receiver_id = ?";
+
+    public static final String SET_TRANSACTION = "INSERT INTO transactions (transaction_id, amount, transaction_date, sender_id, receiver_id, currency_code, type) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public static final String SET_DEPOSIT = "UPDATE balances AS b " +
             "SET amount = amount + ? " +
@@ -132,8 +134,43 @@ public class UserDAO {
         return transactions;
     }
 
-    public boolean deposit(String email, double amount, String currency) throws SQLException {
+    public boolean transaction(double amount, UUID senderId, UUID receiverId, String currency, String type) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SET_TRANSACTION)) {
 
+            UUID transactionId = UUID.randomUUID();
+
+            statement.setObject(1, transactionId);
+            statement.setDouble(2, amount);
+            statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            statement.setObject(4, senderId);
+            statement.setObject(5, receiverId);
+            statement.setString(6, currency);
+            statement.setString(7, type);
+
+            int rowsInserted = statement.executeUpdate();
+
+            return rowsInserted > 0;
+        }
+    }
+
+    public UUID getUserIdByEmail(String email) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_USER_ID)) {
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String userIdString = resultSet.getString("id");
+                return UUID.fromString(userIdString);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public boolean deposit(String email, double amount, String currency) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SET_DEPOSIT)) {
 
@@ -143,7 +180,17 @@ public class UserDAO {
 
             int rowsUpdated = statement.executeUpdate();
 
-            return rowsUpdated > 0;
+            if (rowsUpdated > 0) {
+                UUID senderId = getUserIdByEmail(email);
+                UUID receiverId = getUserIdByEmail(email);
+                if (senderId != null) {
+                    return transaction(amount, senderId, receiverId, currency, "DEPOSIT");
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
     }
 
@@ -158,7 +205,17 @@ public class UserDAO {
 
             int rowsUpdated = statement.executeUpdate();
 
-            return rowsUpdated > 0;
+            if (rowsUpdated > 0) {
+                UUID senderId = getUserIdByEmail(email);
+                UUID receiverId = getUserIdByEmail(email);
+                if (senderId != null) {
+                    return transaction(amount, senderId, receiverId, currency, "WITHDRAW");
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
     }
 

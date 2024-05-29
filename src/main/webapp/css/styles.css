@@ -25,7 +25,8 @@ body {
 }
 
 .text-bg-primary {
-    background-color: #6f42c1 !important;
+    color: #000000 !important;
+    background-color: #f4eeff !important;
 }
 
 .badge {
