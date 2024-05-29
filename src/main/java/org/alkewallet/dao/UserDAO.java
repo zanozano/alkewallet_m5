@@ -110,4 +110,28 @@ public class UserDAO {
         return transactions;
     }
 
+    public boolean deposit(String email, double amount, String currency) throws SQLException {
+
+        String query = "UPDATE balances AS b " +
+                "SET amount = amount + ? " +
+                "FROM accounts AS a " +
+                "JOIN users AS u ON a.user_id = u.id " +
+                "WHERE b.account_id = a.id " +
+                "AND u.email = ? " +
+                "AND b.currency_code = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setDouble(1, amount);
+            statement.setString(2, email);
+            statement.setString(3, currency);
+
+            int rowsUpdated = statement.executeUpdate();
+
+            return rowsUpdated > 0;
+        }
+    }
+
+
 }

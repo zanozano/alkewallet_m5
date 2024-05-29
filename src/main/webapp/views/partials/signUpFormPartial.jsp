@@ -1,6 +1,6 @@
-<div id="signup" class="main-section row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card-custom mt-5 p-5">
+<div id="signup" class="main-section">
+    <div class="col-md-6">
+        <div class="card-custom p-5">
             <h4 class="text-center mb-4">Sign Up</h4>
             <form action="signup" method="post">
                 <div class="input-group mb-3">
